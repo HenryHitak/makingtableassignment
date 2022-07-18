@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jquery-3.6.0.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <select>
+        <option value="">Select a Department</option>
+    </select>
+    <select value="">
+        <option value="" class=".modal-content p">Select an Employee</option> 
+    </select>
+    <table>
+        <thead>
+            <tr>
+                <th>EmployeeID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <!-- <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th> -->
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
+</body>
+<script>
+      let populate = (data)=>{
+        let tbody = document.getElementsByTagName("tbody")[0];
+        let selectDept = document.getElementsByTagName('select')[0];
+        let selectEmpl = document.getElementsByTagName('select')[1];
+        let datas = JSON.parse(data);
+          let duplicate = new Set();
+        for (let obj of datas){
+            let tr = document.createElement('tr');
+            // tr.append("<td>" + obj.EmployeeID + "</td>");
+            // tr.append("<td>" + obj.first_name + "</td>");
+            // tr.append("<td>" + obj.last_name + "</td>");
+            // tr.append("<td>" + obj.Department + "</td>");  
+            // tr.append("<td>" + obj.Salary + "</td>");
+            let td = document.createElement("td");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            td.innerText = obj.EmployeeID;
+            td1.innerHTML = obj.first_name;
+            td2.innerHTML = obj.last_name;
+            td3.innerHTML = obj.Department;
+            td4.innerHTML = obj.Salary;
+            tr.append(td,td1,td2,td3,td4);
+
+            let option2 = document.createElement("option");
+
+            option2.innerHTML = obj.first_name;
+            duplicate.add(obj.Department);
+            selectEmpl.append(option2);
+            tbody.append(tr);
+          }
+          
+          for(let x of duplicate){
+            let option1 = document.createElement("option");
+                option1.innerHTML = x ;
+                selectDept.append(option1);
+            }
+
+      
+        $.each(data,function(i,v){
+        if(data.indexOf(v) == -1 ) data.push(value);
+        });
+        $('select').eq(0).change(function(event){
+            if($(event.target).val()){
+            populate($(event.target).val());
+            }
+        })
+        
+    class hrdept {
+      constructor(firstName, lastName, grades, courseName) {
+        this.firstName = firstName
+        this.lastName = lastName
+        this.salary = salary
+        this.courseName = courseName
+      }
+      maximum() {
+        let max = this.salary[0]
+        for (let totalsal of this.salary) {
+          if (max < totalsal) {
+            max = totalsal
+          }
+        }
+      }
+      minimum() {
+        let min = this.salary[0]
+        for (let totalsal of this.salary)
+          if (min > totalsal) {
+            min = totalsal
+          }
+      }
+    }
+    $.getJSON("./employeeData.json", function (data) {
+      $.each(data, function (index, obj) {
+        let tr = $("<tr></tr>");
+        tr.append("<td>" + obj.EmployeeID + "</td>");
+        tr.append("<td>" + obj.first_name + "</td>");
+        tr.append("<td>" + obj.last_name + "</td>");
+        tr.append("<td>" + obj.Department + "</td>");
+        tr.append("<td>" + obj.Salary + "</td>");
+        let td3 = $("<td></td>");
+        let div = $(
+          '<div' +obj.Department+'</div>'
+        );
+        $('select').eq(1).change(function(event){
+            if($(event.target).val()){
+            populate($(event.target).val());
+            }
+        })
+        $('select').eq(0).change(function (event) {
+        if($(event.target).val()){
+            populate($(event.target).val());
+            $(".modal-content p").eq(0).append(obj.EmployeeID);
+            $(".modal-content p").eq(1).append(obj.first_name);
+            $(".modal-content p").eq(2).append(obj.last_name);
+            $(".modal-content p").eq(3).append(obj.Department);
+            $(".modal-content p").eq(4).append(obj.Salary);
+            $(".modal-content p").eq(5).append(obj.email);
+            $(".modal-content p").eq(6).append(obj.Phone);
+            $(".modal-content p").eq(6).append(obj.Address);
+            $(".modal").show();
+        }
+        });
+        td3.append(button);
+        tr.append(td3);
+        $("tbody").append(tr);
+      });
+    });
+    }
+    async function loadJson(){
+    let ajaxPromise = new Promise ((resolve,reject)=>{
+        let req = new XMLHttpRequest();
+        req.open("GET","./employeeData.json");
+        req.onload = () =>{
+            if(req.status==200){
+                resolve(req.responseText);
+            }else{
+                reject(req.statusText0);
+            }
+        };
+        req.send();
+    })
+    populate(await ajaxPromise);
+    }
+    loadJson().then(
+        ()=>{},
+        ()=>{}
+    )
+
+</script>
+</html>
